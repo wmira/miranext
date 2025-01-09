@@ -1,32 +1,38 @@
 {
-  "name": "blogster-bubblegum",
-  "version": "0.0.1",
-  "private": true,
-  "scripts": {
-    "dev": "astro dev",
-    "start": "astro dev",
-    "build": "astro build",
-    "preview": "astro preview",
-    "astro": "astro",
-    "clean": "rm -rf dist"
-  },
-  "dependencies": {
-    "@astrojs/prism": "^1.0.2",
-    "@astrojs/rss": "^2.0.0",
-    "@astrojs/sitemap": "^1.0.0",
-    "@astrojs/tailwind": "^2.1.3",
-    "@markdoc/markdoc": "^0.2.1",
-    "@tailwindcss/typography": "^0.5.9",
-    "astro": "^1.9.2",
-    "astro-markdoc-renderer": "0.0.1-alpha.1",
-    "globby": "^13.1.3",
-    "gray-matter": "^4.0.3",
-    "slugify": "^1.6.5",
-    "tailwindcss": "^3.2.4",
-    "zod": "^3.20.2"
-  },
-  "devDependencies": {
-    "prettier-plugin-astro": "^0.7.2",
-    "typescript": "^4.9.4"
-  }
+	"name": "vigorous-virgo",
+	"type": "module",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "astro dev",
+		"start": "astro dev",
+		"build": "astro check && astro build",
+		"preview": "astro preview",
+		"astro": "astro"
+	},
+	"dependencies": {
+		"@astrojs/check": "0.9.4",
+		"@astrojs/react": "4.1.2",
+		"@astrojs/rss": "4.0.11",
+		"@astrojs/sitemap": "3.2.1",
+		"@astrojs/tailwind": "5.1.4",
+		"@astrojs/vercel": "^8.0.1",
+		"@types/react": "18.3.18",
+		"@types/react-dom": "18.3.5",
+		"@vercel/analytics": "1.4.1",
+		"astro": "^5.1.4",
+		"canvas-confetti": "1.9.3",
+		"mdast-util-to-string": "4.0.0",
+		"react": "19.0.0",
+		"react-dom": "19.0.0",
+		"reading-time": "1.5.0",
+		"rehype-pretty-code": "0.14.0",
+		"tailwindcss": "3.4.17",
+		"typescript": "5.7.3"
+	},
+	"devDependencies": {
+		"@tailwindcss/typography": "0.5.16",
+		"prettier": "3.4.2",
+		"prettier-plugin-astro": "0.14.1",
+		"prettier-plugin-tailwindcss": "0.6.9"
+	}
 }
