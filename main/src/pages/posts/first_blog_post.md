@@ -3,7 +3,7 @@ layout: ../../layouts/post.astro
 title: "Starting Again."
 pubDate: 2025-01-10
 description: "Starting Again."
-author: "nicdun"
+author: "wmira"
 excerpt: New Year Another Try.
 image:
   src:
