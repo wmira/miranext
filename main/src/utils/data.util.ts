@@ -1,4 +1,4 @@
-import { MarkdownInstance } from "astro";
+import { type MarkdownInstance } from "astro";
 
 export const formatDate = (pubDate: string) => {
   var options: Intl.DateTimeFormatOptions = {
@@ -21,4 +21,4 @@ export const sortPostsByDate = (a: MarkdownInstance<any>, b: MarkdownInstance<an
     return -1;
   }
   return 0;
-} 
+}

@@ -1,10 +1,10 @@
 ---
-import Section from '@/components/Section.astro';
-import Card from '@/components/Card.astro';
-import Base from '@/layouts/Base.astro';
-import Heading from '@/components/Heading.astro';
-import { AppConfig } from '@/utils/AppConfig';
-import { MarkdownInstance } from 'astro/dist/@types/astro';
+import Section from '../../components/Section.astro';
+import Card from '../../components/Card.astro';
+import Base from '../../layouts/Base.astro';
+import Heading from '../../components/Heading.astro';
+import { AppConfig } from '../../utils/AppConfig'
+import { type MarkdownInstance } from 'astro';
 
 export async function getStaticPaths(): Promise<any> {
 	const allPosts = await Astro.glob('../posts/*.md');
