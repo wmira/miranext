@@ -9,8 +9,7 @@ import type { MarkdownInstance } from 'astro';
 const { title } = AppConfig;
 const { description } = AppConfig;
 
-const allPosts =  await Astro.glob('./posts/*.{md,mdx}') as unknown as Array<MarkdownInstance<any>>;
-	console.log('got postsxxxx', allPosts)
+const allPosts =  await Astro.glob('./*.{md,mdx}') as unknown as Array<MarkdownInstance<any>>;
 allPosts.sort(sortPostsByDate);
 ---
 
