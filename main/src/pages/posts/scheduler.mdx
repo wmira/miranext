@@ -14,9 +14,9 @@ import SchedulerDemo from '../../components/SchedulerDemo.astro';
 
 # Scheduler
 
-I've recently became aware of the new Scheduler API. The cool thing about this api is it enables us to be able to yield a long running routine.
-As you know, in javascript, if you call a function, the ui will not be able to refresh until that function is done.  This is really important
-because we should be prevent the UI to freeze or from being unresponsive to user inputs when developing frontend apps.
+I've recently became aware of the new Scheduler API. The cool thing about this api is that it enables a long running loop to yield.
+As you know in javascript, if you call a function, the ui will not be able to refresh or respond to user input until that function is fully done.
+Frontend apps by default should always be responsive to user input/requests and should not freeze.
 
 Below is a demo of scheduler.yield(). Use your arrow keys to move the highlighted box. You should notice that your key navigation request is still
 happening while the long for loop is happening.
