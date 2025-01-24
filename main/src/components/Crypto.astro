@@ -1,0 +1,44 @@
+---
+
+---
+
+<div class="w-full flex flex-col items-center">
+  <div id="cryptoroot" class="flex flex-col pb-2"></div>
+</div>
+
+<script>
+  type Data = {
+    data: string
+  }
+  const creatBinanceWssApi = () => {
+    let wss: WebSocket | undefined;
+    let id = 1;
+    function start(cb: (d: string) => void) {
+      wss = new WebSocket("wss://stream.binance.com:9443/ws");
+      wss.onopen = () => {
+        if (wss) {
+          wss.send(
+            JSON.stringify({
+              method: "SUBSCRIBE",
+              params: ["!ticker@arr"],
+              id: id++
+            })
+          );
+        }
+      };
+      wss.onmessage = (e: Data) => {
+        cb(e.data);
+      };
+      wss.onerror = (er: any) => {
+        console.log("error", er);
+      };
+    }
+
+    return {
+      start
+    };
+  };
+
+
+
+</script>

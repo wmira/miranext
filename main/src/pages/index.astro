@@ -11,7 +11,7 @@ const { description } = AppConfig;
 
 const allPosts = await Astro.glob('./posts/*.{md,mdx}') as unknown as Array<MarkdownInstance<any>>;
 allPosts.sort(sortPostsByDate);
-const latestPosts = allPosts.slice(0, 3);
+const latestPosts = allPosts.filter(a => a.frontmatter.status === 'published').slice(0, 3);
 ---
 
 <Base head={{ title, description }}>

@@ -7,7 +7,8 @@ import { AppConfig } from '../../utils/AppConfig'
 import { type MarkdownInstance } from 'astro';
 
 export async function getStaticPaths(): Promise<any> {
-	const allPosts = await Astro.glob('../posts/*.{md, mdx}') as unknown as Array<MarkdownInstance<any>>;
+	const allPosts = (await Astro.glob('../posts/*.{md, mdx}') as unknown as Array<MarkdownInstance<any>>)
+			.filter((post) => post.frontmatter.status == 'published');
 
 	const allTags: Set<string> = new Set(
 		allPosts.map((post: MarkdownInstance<Record<string, any>>) => post.frontmatter.tags).flat()

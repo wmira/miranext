@@ -11,13 +11,14 @@ const { description } = AppConfig;
 
 const allPosts =  await Astro.glob('./*.{md,mdx}') as unknown as Array<MarkdownInstance<any>>;
 allPosts.sort(sortPostsByDate);
+const publishedPosts = allPosts.filter((post: any) => post.frontmatter.status === 'published');
 ---
 
 <Base head={{ title, description }}>
 	<Section><Heading title="Posts" /></Section>
 	<Section>
 		{
-			allPosts.map((post: any) => (
+			publishedPosts.map((post: any) => (
 				<div class="mb-4 basis-1 last:mb-0">
 					<Card post={post} />
 				</div>

@@ -9,9 +9,11 @@ import { AppConfig } from '../../utils/AppConfig';
 const { title } = AppConfig;
 const { description } = AppConfig;
 
-const allPosts = await Astro.glob('../posts/*.{md, mdx}') as unknown as Array<MarkdownInstance<any>>;
+const allPosts = (await Astro.glob('../posts/*.{md, mdx}') as unknown as Array<MarkdownInstance<any>>)
+									//.filter(post => post.frontmatter.status = "published")
 
 const allTags = allPosts.map((post) => post.frontmatter.tags).flat();
+
 const uniqueTags: Set<string> = new Set(allTags);
 let tagMap: Record<string, number> = {};
 
