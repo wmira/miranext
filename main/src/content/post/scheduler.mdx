@@ -1,0 +1,131 @@
+---
+publishDate: "11 January 2025"
+tags: ["javascript", "scheduler"]
+updatedDate: 11 January 2025
+title: "Scheduler"
+description: "Build Non Blocking UI's via the Scheduler API"
+author: "Warren Mira"
+excerpt: The Scheduler API enables us to write Frontend Apps that won't freeze the UI.
+---
+
+import SchedulerDemo from '../../components/SchedulerDemo.astro';
+
+## Scheduler
+
+I've recently became aware of the new Scheduler API. The cool thing about this api is that it enables a long running loop to yield.
+As you know in javascript, if you call a function, the ui will not be able to refresh or respond to user input until that function is fully done.
+Frontend apps by default should always be responsive to user input/requests and should not freeze.
+
+Below is a demo of scheduler.yield(). Use your arrow keys to move the highlighted box. You should notice that your key navigation request is still
+working while the long for loop is going on as well.
+
+<SchedulerDemo />
+
+## References
+
+1. https://developer.mozilla.org/en-US/docs/Web/API/Scheduler
+2. https://github.com/astoilkov/main-thread-scheduling
+
+## Source
+
+```javascript
+
+ const ELEMENTS = 1000;
+  const ITER = Number.MAX_SAFE_INTEGER;
+  const INTERACTION_COLS = 20
+  const INTERACTION_ROWS = 6
+  const root = document.getElementById('demoroot')
+  const interRoot = document.getElementById('interroot')
+
+  let activeRow = 0
+  let activeCol = 0
+
+  let lastActiveRow = -1
+  let lastActiveCol = -1
+
+  for (let i=0; i < INTERACTION_ROWS; i++) {
+    const row = document.createElement('div')
+    row.setAttribute('class', 'flex')
+    interRoot?.appendChild(row)
+    for (let j=0; j < INTERACTION_COLS; j++) {
+      const cell = document.createElement('div')
+      cell.setAttribute('class', 'w-6 h-6 border border-slate-100')
+      cell.setAttribute('id', `cell-${i}-${j}`)
+      row.appendChild(cell)
+    }
+  }
+
+  function highlightActive(row: number, col: number, prevRow: number, prevCol: number) {
+    const cell = document.getElementById(`cell-${row}-${col}`) as HTMLDivElement
+    if (cell) {
+      cell.style.background = 'pink'
+    }
+
+    const lastActiveCell = document.getElementById(`cell-${prevRow}-${prevCol}`) as HTMLDivElement
+
+    if (lastActiveCell && lastActiveCell !== cell) {
+      lastActiveCell.style.background = 'transparent'
+    }
+  }
+  highlightActive(activeRow, activeCol, lastActiveRow, lastActiveCol)
+  lastActiveCol = activeCol
+  lastActiveRow = activeRow
+  document.addEventListener('keydown', (e) => {
+    e.preventDefault()
+    if (e.code === 'ArrowDown' && activeRow + 1 < INTERACTION_ROWS) {
+      lastActiveRow = activeRow
+      lastActiveCol = activeCol
+      activeRow += 1
+    }
+    if (e.code === 'ArrowRight' && activeCol + 1 < INTERACTION_COLS) {
+      lastActiveCol = activeCol
+      lastActiveRow = activeRow
+      activeCol += 1
+    }
+
+    if (e.code === 'ArrowUp' && activeRow - 1 > -1) {
+      lastActiveRow = activeRow
+      lastActiveCol = activeCol
+      activeRow -= 1
+    }
+    if (e.code === 'ArrowLeft' && activeCol - 1 > -1) {
+      lastActiveRow = activeRow
+      lastActiveCol = activeCol
+      activeCol -= 1
+    }
+    highlightActive(activeRow, activeCol, lastActiveRow, lastActiveCol)
+  })
+
+  if (root) {
+    const colors = [];
+    for (let i = 0; i < ELEMENTS; i++) {
+      await (window as any)                                                                                             .yield();
+      const color = `${Math.floor(Math.random() * 16777215)
+        .toString(16)
+        .padStart(6, '0')}`;
+      colors.push(color);
+    }
+    for (let j = 0; j < ITER; j++) {
+      for (let i = 0; i < colors.length; i++) {
+        await (window as any).scheduler.yield();
+        const id = colors[i];
+        let el = document.getElementById(id);
+        if (el) {
+          el.style.background = `#${Math.floor(Math.random() * 16777215)
+            .toString(16)
+            .padStart(6, '0')}`;
+        } else {
+          el = document.createElement('div');
+          el.style.width = '10px';
+          el.style.height = '10px';
+          el.style.background = `#${id}`;
+          el.setAttribute('id', id);
+          root.appendChild(el);
+        }
+      }
+    }
+  }
+
+
+```
+

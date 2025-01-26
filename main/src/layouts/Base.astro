@@ -1,60 +1,34 @@
 ---
-import Footer from '../components/Footer.astro';
-import Navbar from '../components/Navbar.astro';
-import { AppConfig } from '../utils/AppConfig';
+import BaseHead from "@/components/BaseHead.astro";
+import SkipLink from "@/components/SkipLink.astro";
+import ThemeProvider from "@/components/ThemeProvider.astro";
+import Footer from "@/components/layout/Footer.astro";
+import Header from "@/components/layout/Header.astro";
+import { siteConfig } from "@/site.config";
+import type { SiteMeta } from "@/types";
 
-export interface Props {
-	head: {
-		title: string;
-		description: string;
-	};
+interface Props {
+	meta: SiteMeta;
 }
 
 const {
-	head: { title, description }
-} = Astro.props as Props;
+	meta: { articleDate, description = siteConfig.description, ogImage, title },
+} = Astro.props;
 ---
 
-<html lang="en">
+<html class="scroll-smooth" lang={siteConfig.lang}>
 	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<title>{title}</title>
-		<meta name="description" content={description} />
-		<meta name="author" content={AppConfig.author} />
-
-		<link rel="sitemap" href="/sitemap-index.xml" />
-		<link rel="alternate" type="application/rss+xml" href="/rss.xml" />
-		<link
-			rel="icon"
-			href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🛠️</text></svg>"
-		/>
-		<script defer data-domain="miranext.net" src="https://analytics.miranext.net/js/script.js"></script>
-		<script>
-			if (
-				localStorage.getItem('dark-mode') === 'true' ||
-				(!('dark-mode' in localStorage) &&
-					window.matchMedia('(prefers-color-scheme: dark)').matches)
-			) {
-				localStorage.setItem('dark-mode', 'true');
-				document.querySelector('html')?.classList.add('dark');
-			} else {
-				localStorage.setItem('dark-mode', 'false');
-				document.querySelector('html')?.classList.remove('dark');
-			}
-		</script>
+		<BaseHead articleDate={articleDate} description={description} ogImage={ogImage} title={title} />
 	</head>
 	<body
-		class="flex min-h-screen flex-col bg-stone-100 font-mono text-gray-950 dark:bg-stone-900 dark:text-white"
+		class="mx-auto flex min-h-screen max-w-5xl flex-col bg-bgColor px-4 pt-16 font-normal text-textColor antialiased sm:px-8"
 	>
-		<Navbar />
-		<div class="flex-1">
+		<ThemeProvider />
+		<SkipLink />
+		<Header />
+		<main id="main">
 			<slot />
-		</div>
+		</main>
 		<Footer />
 	</body>
 </html>
-<style is:global>
-	:root {
-	}
-</style>
